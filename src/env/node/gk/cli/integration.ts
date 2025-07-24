@@ -311,7 +311,7 @@ export class GkCliIntegrationProvider implements Disposable {
 						if (appName === 'vscode') {
 							const config = {
 								name: 'GitKraken',
-								command: Uri.file(`${directoryPath}\\${mcpFileName}`).fsPath,
+								command: mcpExtractedPath.fsPath,
 								args: ['mcp'],
 								type: 'stdio',
 							};
@@ -336,7 +336,9 @@ export class GkCliIntegrationProvider implements Disposable {
 							);
 						}
 
-						Logger.log('MCP configuration completed');
+						Logger.log(
+							`MCP configuration completed.${appName === 'vscode' ? " Click 'install' to install." : ''}`,
+						);
 					} catch (error) {
 						const errorMsg = `MCP server configuration failed: ${error}`;
 						Logger.error(errorMsg);
