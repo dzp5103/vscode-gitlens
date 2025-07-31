@@ -2,6 +2,8 @@ import type { CancellationToken, ColorTheme, ConfigurationChangeEvent } from 'vs
 import { CancellationTokenSource, Disposable, env, Uri, window } from 'vscode';
 import type { CreatePullRequestActionContext, OpenPullRequestActionContext } from '../../../api/gitlens';
 import { getAvatarUri } from '../../../avatars';
+import type { AiRebaseBranchCommandArgs } from '../../../commands/aiRebaseBranch';
+import type { AiRebaseUnpushedCommandArgs } from '../../../commands/aiRebaseUnpushed';
 import { parseCommandContext } from '../../../commands/commandContext.utils';
 import type { CopyDeepLinkCommandArgs } from '../../../commands/copyDeepLink';
 import type { CopyMessageToClipboardCommandArgs } from '../../../commands/copyMessageToClipboard';
@@ -525,6 +527,8 @@ export class GraphWebviewProvider implements WebviewProvider<State, State, Graph
 			this.host.registerWebviewCommand('gitlens.graph.rebaseOntoUpstream', this.rebaseToRemote),
 			this.host.registerWebviewCommand('gitlens.graph.renameBranch', this.renameBranch),
 			this.host.registerWebviewCommand('gitlens.graph.associateIssueWithBranch', this.associateIssueWithBranch),
+			this.host.registerWebviewCommand('gitlens.ai.aiRebaseBranch:graph', this.aiRebaseBranch),
+			this.host.registerWebviewCommand('gitlens.ai.aiRebaseUnpushed:graph', this.aiRebaseUnpushed),
 
 			this.host.registerWebviewCommand('gitlens.graph.switchToBranch', this.switchTo),
 
@@ -3232,6 +3236,32 @@ export class GraphWebviewProvider implements WebviewProvider<State, State, Graph
 			const { ref } = item.webviewItemValue;
 			return executeCommand<AssociateIssueWithBranchCommandArgs>('gitlens.associateIssueWithBranch', {
 				command: 'associateIssueWithBranch',
+				branch: ref,
+				source: 'graph',
+			});
+		}
+
+		return Promise.resolve();
+	}
+
+	@log()
+	private aiRebaseBranch(item?: GraphItemContext) {
+		if (isGraphItemRefContext(item, 'branch')) {
+			const { ref } = item.webviewItemValue;
+			return executeCommand<AiRebaseBranchCommandArgs>('gitlens.ai.aiRebaseBranch', {
+				branch: ref,
+				source: 'graph',
+			});
+		}
+
+		return Promise.resolve();
+	}
+
+	@log()
+	private aiRebaseUnpushed(item?: GraphItemContext) {
+		if (isGraphItemRefContext(item, 'branch')) {
+			const { ref } = item.webviewItemValue;
+			return executeCommand<AiRebaseUnpushedCommandArgs>('gitlens.ai.aiRebaseUnpushed', {
 				branch: ref,
 				source: 'graph',
 			});

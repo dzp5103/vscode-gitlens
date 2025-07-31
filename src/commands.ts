@@ -31,6 +31,8 @@ import './commands/generateCommitMessage';
 import './commands/generateRebase';
 import './commands/ghpr/openOrCreateWorktree';
 import './commands/gitWizard';
+import './commands/aiRebaseBranch';
+import './commands/aiRebaseUnpushed';
 import './commands/inviteToLiveShare';
 import './commands/inspect';
 import './commands/logging';

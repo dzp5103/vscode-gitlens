@@ -31,6 +31,8 @@ export type GlCommandsDeprecated =
 	| 'gitlens.showFileHistoryInView';
 
 type InternalGraphWebviewCommands =
+	| 'gitlens.ai.aiRebaseBranch:graph'
+	| 'gitlens.ai.aiRebaseUnpushed:graph'
 	| 'gitlens.graph.abortPausedOperation'
 	| 'gitlens.graph.continuePausedOperation'
 	| 'gitlens.graph.openRebaseEditor'
@@ -125,6 +127,8 @@ type InternalGlCommands =
 	| `gitlens.action.${string}`
 	| 'gitlens.changeBranchMergeTarget'
 	| 'gitlens.diffWith'
+	| 'gitlens.ai.aiRebaseBranch'
+	| 'gitlens.ai.aiRebaseUnpushed'
 	| 'gitlens.ai.explainCommit:editor'
 	| 'gitlens.ai.explainWip:editor'
 	| 'gitlens.ai.feedback.helpful'
