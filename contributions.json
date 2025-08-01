@@ -29,7 +29,7 @@
 			"menus": {
 				"webview/context": [
 					{
-						"when": "webviewItem =~ /gitlens:branch\\b/ && !listMultiSelection",
+						"when": "webviewItem =~ /gitlens:branch\\b(?=.*?\\b\\+recomposable\\b)/ && !listMultiSelection",
 						"group": "1_gitlens_actions",
 						"order": 6
 					}
